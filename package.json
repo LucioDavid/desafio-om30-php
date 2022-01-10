@@ -1,0 +1,16 @@
+{
+  "name": "desafio-om30-php",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/LucioDavid/desafio-om30-php.git",
+  "author": "Lúcio Meira David <luciomeiradavid@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
