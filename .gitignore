@@ -36,5 +36,9 @@ package-lock.json
 yarn.lock
 npm-debug.log
 
+#arquivos .env
 .env*
 !.env.example
+
+#Guia de Usuário
+user_guide
