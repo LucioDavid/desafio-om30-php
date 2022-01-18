@@ -17,6 +17,11 @@
 
     <!-- Adicionando Javascript -->
     <script>
+        /**
+         * Script por ViaCEP.
+         * Original em:
+         * https://viacep.com.br/exemplo/jquery/
+         */
         $(document).ready(function() {
 
             function limpa_formulário_cep() {
@@ -77,35 +82,32 @@
                 }
             });
         });
-
+    </script>
+    <script>
+        /**
+         * Script por Fernando Valler.
+         * Original em:
+         * https://gist.github.com/fernandovaller/b10a3be0e7b3b46e5895b0f0e75aada5
+         */
         function mascara_cpf(i) {
 
-            var v = i.value;
-
-            if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
-                i.value = v.substring(0, v.length - 1);
-                return;
-            }
-
-            i.setAttribute("maxlength", "14");
-            if (v.length == 3 || v.length == 7) i.value += ".";
-            if (v.length == 11) i.value += "-";
-
+            let v = i.value;
+            v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+            v = v.replace(/(\d{3})(\d)/, "$1.$2") //Coloca um ponto entre o terceiro e o quarto dígitos
+            v = v.replace(/(\d{3})(\d)/, "$1.$2") //Coloca um ponto entre o terceiro e o quarto dígitos
+            //de novo (para o segundo bloco de números)
+            v = v.replace(/(\d{3})(\d{1,2})$/, "$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+            i.value = v;
         }
 
-        function mascara_cep(i) {
+        function mascara_cep(i) { // Inspirada na função anterior, "mascara_cpf".
 
-            var v = i.value;
+            let v = i.value;
 
-            if (isNaN(v[v.length - 1])) { // impede entrar outro caractere que não seja número
-                i.value = v.substring(0, v.length - 1);
-                return;
-            }
-
-            i.setAttribute("maxlength", "14");
-            if (v.length == 2) i.value += ".";
-            if (v.length == 6) i.value += "-";
-
+            v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+            v = v.replace(/(\d{2})(\d)/, "$1.$2") //Coloca um ponto entre o terceiro e o quarto dígitos
+            v = v.replace(/(\d{3})(\d{1,3})$/, "$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+            i.value = v;
         }
     </script>
 </head>
@@ -114,8 +116,9 @@
     <title><?= $titulo_pagina ?></title>
 
     <div class="container">
-        <h1><?= $titulo_pagina ?></h1>
+        <h1 class="center"><?= $titulo_pagina ?></h1>
 
+        <h4>Dados Pessoais</h4>
         <?= form_open_multipart('pacientes/armazenar'); ?>
         <div class="card-panel">
             <div class="row">
@@ -125,11 +128,11 @@
                 </div>
                 <div class="input-field col s12 m4 l3">
                     <label for="data_nasc">Data de Nascimento</label>
-                    <input type="date" name="data_nasc" id="data_nasc">
+                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc">
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" oninput="mascara_cpf(this)">
+                    <input type="text" name="cpf" id="cpf" oninput="mascara_cpf(this)" maxlength="14">
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
@@ -152,7 +155,7 @@
         <div class="card-panel">
             <div>
                 <label for="cep">CEP</label>
-                <input type="text" name="cep" id="cep" oninput="mascara_cep(this)">
+                <input type="text" name="cep" id="cep" oninput="mascara_cep(this)" maxlength="10">
             </div>
             <div>
                 <label for="logradouro">Logradouro</label>
