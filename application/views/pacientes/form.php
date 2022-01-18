@@ -124,19 +124,19 @@
             <div class="row">
                 <div class="input-field col s12 m8 l9">
                     <label for="nome">Nome Completo</label>
-                    <input type="text" name="nome" id="nome">
+                    <input type="text" name="nome" id="nome" required>
                 </div>
                 <div class="input-field col s12 m4 l3">
                     <label for="data_nasc">Data de Nascimento</label>
-                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc">
+                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc" required>
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" oninput="mascara_cpf(this)" maxlength="14">
+                    <input type="text" name="cpf" id="cpf" oninput="mascara_cpf(this)" maxlength="14" required>
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
-                    <input type="text" name="cns" id="cns">
+                    <input type="text" name="cns" id="cns" required>
                 </div>
             </div>
         </div>
@@ -146,7 +146,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <label for="nome_mae">Nome Completo da Mãe</label>
-                    <input type="text" name="nome_mae" id="nome_mae">
+                    <input type="text" name="nome_mae" id="nome_mae" required>
                 </div>
             </div>
         </div>
@@ -155,11 +155,11 @@
         <div class="card-panel">
             <div>
                 <label for="cep">CEP</label>
-                <input type="text" name="cep" id="cep" oninput="mascara_cep(this)" maxlength="10">
+                <input type="text" name="cep" id="cep" oninput="mascara_cep(this)" maxlength="10" required>
             </div>
             <div>
                 <label for="logradouro">Logradouro</label>
-                <input type="text" name="logradouro" id="logradouro">
+                <input type="text" name="logradouro" id="logradouro" required>
             </div>
             <div>
                 <label for="numero">Número</label>
@@ -171,15 +171,15 @@
             </div>
             <div>
                 <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" id="bairro">
+                <input type="text" name="bairro" id="bairro" required>
             </div>
             <div>
                 <label for="cidade">Cidade</label>
-                <input type="text" name="cidade" id="cidade">
+                <input type="text" name="cidade" id="cidade" required>
             </div>
             <div>
                 <label for="estado">Estado</label>
-                <input type="text" name="estado" id="estado">
+                <input type="text" name="estado" id="estado" required>
             </div>
         </div>
         <?= form_close(); ?>
