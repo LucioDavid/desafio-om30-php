@@ -63,11 +63,15 @@
                                 $("#bairro").val(dados.bairro);
                                 $("#cidade").val(dados.localidade);
                                 $("#estado").val(dados.uf);
+                                //Atualiza texto de ajuda/validação do campo "logradouro".
+                                $("#logradouro").attr('class', 'validate valid');
                             } //end if.
                             else {
                                 //CEP pesquisado não foi encontrado.
                                 limpa_formulário_cep();
                                 alert("CEP não encontrado.");
+                                //Atualiza texto de ajuda/validação do campo "logradouro".
+                                $("#logradouro").attr('class', 'validate invalid');
                             }
                         });
                     } //end if.
@@ -75,6 +79,8 @@
                         //cep é inválido.
                         limpa_formulário_cep();
                         alert("Formato de CEP inválido.");
+                        //Atualiza texto de ajuda/validação do campo "logradouro".
+                        $("#logradouro").attr('class', 'validate invalid');
                     }
                 } //end if.
                 else {
