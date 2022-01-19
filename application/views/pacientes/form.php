@@ -105,8 +105,19 @@
             let v = i.value;
 
             v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
-            v = v.replace(/(\d{2})(\d)/, "$1.$2") //Coloca um ponto entre o terceiro e o quarto dígitos
-            v = v.replace(/(\d{3})(\d{1,3})$/, "$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+            v = v.replace(/(\d{2})(\d)/, "$1.$2") 
+            v = v.replace(/(\d{3})(\d{1,3})$/, "$1-$2") 
+            i.value = v;
+        }
+
+        function mascara_cns(i) { // Inspirada na função anterior, "mascara_cpf".
+
+            let v = i.value;
+
+            v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
+            v = v.replace(/(\d{3})(\d)/, "$1 $2")
+            v = v.replace(/(\d{4})(\d)/, "$1 $2")
+            v = v.replace(/(\d{4})(\d{1,4})$/, "$1 $2")
             i.value = v;
         }
     </script>
@@ -136,7 +147,7 @@
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
-                    <input type="text" name="cns" id="cns" required>
+                    <input type="text" name="cns" id="cns" oninput="mascara_cns(this)" maxlength="18" required>
                 </div>
             </div>
         </div>
