@@ -307,10 +307,12 @@
                 <div class="input-field col s12">
                     <label for="numero">Número</label>
                     <input type="number" name="numero" id="numero" min="1">
+                    <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
                 <div class="input-field col s12">
                     <label for="complemento">Complemento</label>
                     <input type="text" name="complemento" id="complemento" maxlength="100">
+                    <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
                 <div class="input-field col s12">
                     <label for="bairro">Bairro</label>
