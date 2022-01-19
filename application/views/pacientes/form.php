@@ -252,11 +252,13 @@
             <div class="row">
                 <div class="input-field col s12 m8 l9">
                     <label for="nome">Nome Completo</label>
-                    <input type="text" name="nome" id="nome" maxlength="100" required>
+                    <input type="text" name="nome" id="nome" maxlength="100" class="validate" required>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m4 l3">
                     <label for="data_nasc">Data de Nascimento</label>
-                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc" required>
+                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc" class="validate" required>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cpf">CPF</label>
@@ -276,7 +278,8 @@
             <div class="row">
                 <div class="input-field col s12">
                     <label for="nome_mae">Nome Completo da Mãe</label>
-                    <input type="text" name="nome_mae" id="nome_mae" maxlength="100" required>
+                    <input type="text" name="nome_mae" id="nome_mae" class="validate" maxlength="100" required>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
             </div>
         </div>
@@ -285,11 +288,13 @@
         <div class="card-panel">
             <div>
                 <label for="cep">CEP</label>
-                <input type="text" name="cep" id="cep" oninput="mascara_cep(this)" maxlength="10" required>
+                <input type="text" name="cep" id="cep" class="validate" oninput="mascara_cep(this)" maxlength="10" required>
+                <span class="helper-text" data-error="obrigatório" data-success=""></span>
             </div>
             <div>
                 <label for="logradouro">Logradouro</label>
-                <input type="text" name="logradouro" id="logradouro" maxlength="100" required>
+                <input type="text" name="logradouro" id="logradouro" class="validate" maxlength="100" required>
+                <span class="helper-text" data-error="obrigatório" data-success=""></span>
             </div>
             <div>
                 <label for="numero">Número</label>
