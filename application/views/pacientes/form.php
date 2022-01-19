@@ -52,6 +52,7 @@
                         $("#bairro").val("...");
                         $("#cidade").val("...");
                         $("#estado").val("...");
+                        M.updateTextFields();
 
                         //Consulta o webservice viacep.com.br/
                         $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
@@ -191,7 +192,7 @@
                             $(this).attr('class', 'validate invalid');
                         } else {
                             $(this).attr('class', 'validate valid');
-                        } 
+                        }
                     } else {
                         $(this).attr('class', 'validate invalid');
                     }
@@ -286,35 +287,37 @@
 
         <h4>Endereço</h4>
         <div class="card-panel">
-            <div>
-                <label for="cep">CEP</label>
-                <input type="text" name="cep" id="cep" class="validate" oninput="mascara_cep(this)" maxlength="10" required>
-                <span class="helper-text" data-error="obrigatório" data-success=""></span>
-            </div>
-            <div>
-                <label for="logradouro">Logradouro</label>
-                <input type="text" name="logradouro" id="logradouro" class="validate" maxlength="100" required>
-                <span class="helper-text" data-error="obrigatório" data-success=""></span>
-            </div>
-            <div>
-                <label for="numero">Número</label>
-                <input type="number" name="numero" id="numero" min="1">
-            </div>
-            <div>
-                <label for="complemento">Complemento</label>
-                <input type="text" name="complemento" id="complemento" maxlength="100">
-            </div>
-            <div>
-                <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" id="bairro" class="grey-text text-darken-1" maxlength="100" required readonly>
-            </div>
-            <div>
-                <label for="cidade">Cidade</label>
-                <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly>
-            </div>
-            <div>
-                <label for="estado">Estado</label>
-                <input type="text" name="estado" id="estado" class="grey-text text-darken-1" required readonly>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="cep">CEP</label>
+                    <input type="text" name="cep" id="cep" class="validate" oninput="mascara_cep(this)" maxlength="10" required>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
+                </div>
+                <div class="input-field col s12">
+                    <label for="logradouro">Logradouro</label>
+                    <input type="text" name="logradouro" id="logradouro" class="validate" maxlength="100" required>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
+                </div>
+                <div class="input-field col s12">
+                    <label for="numero">Número</label>
+                    <input type="number" name="numero" id="numero" min="1">
+                </div>
+                <div class="input-field col s12">
+                    <label for="complemento">Complemento</label>
+                    <input type="text" name="complemento" id="complemento" maxlength="100">
+                </div>
+                <div class="input-field col s12">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" name="bairro" id="bairro" class="grey-text text-darken-1" maxlength="100" required readonly>
+                </div>
+                <div class="input-field col s12">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly>
+                </div>
+                <div class="input-field col s12">
+                    <label for="estado">Estado</label>
+                    <input type="text" name="estado" id="estado" class="grey-text text-darken-1" required readonly>
+                </div>
             </div>
         </div>
         <?= form_close(); ?>
