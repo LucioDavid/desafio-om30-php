@@ -135,7 +135,7 @@
             <div class="row">
                 <div class="input-field col s12 m8 l9">
                     <label for="nome">Nome Completo</label>
-                    <input type="text" name="nome" id="nome" required>
+                    <input type="text" name="nome" id="nome" maxlength="100" required>
                 </div>
                 <div class="input-field col s12 m4 l3">
                     <label for="data_nasc">Data de Nascimento</label>
@@ -157,7 +157,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     <label for="nome_mae">Nome Completo da Mãe</label>
-                    <input type="text" name="nome_mae" id="nome_mae" required>
+                    <input type="text" name="nome_mae" id="nome_mae" maxlength="100" required>
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
             </div>
             <div>
                 <label for="logradouro">Logradouro</label>
-                <input type="text" name="logradouro" id="logradouro" required>
+                <input type="text" name="logradouro" id="logradouro" maxlength="100" required>
             </div>
             <div>
                 <label for="numero">Número</label>
@@ -178,15 +178,15 @@
             </div>
             <div>
                 <label for="complemento">Complemento</label>
-                <input type="text" name="complemento" id="complemento">
+                <input type="text" name="complemento" id="complemento" maxlength="100">
             </div>
             <div>
                 <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" id="bairro" required>
+                <input type="text" name="bairro" id="bairro" maxlength="100" required>
             </div>
             <div>
                 <label for="cidade">Cidade</label>
-                <input type="text" name="cidade" id="cidade" required>
+                <input type="text" name="cidade" id="cidade" maxlength="100" required>
             </div>
             <div>
                 <label for="estado">Estado</label>
