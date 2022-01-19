@@ -301,15 +301,15 @@
             </div>
             <div>
                 <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" id="bairro" maxlength="100" required>
+                <input type="text" name="bairro" id="bairro" class="grey-text text-darken-1" maxlength="100" required readonly>
             </div>
             <div>
                 <label for="cidade">Cidade</label>
-                <input type="text" name="cidade" id="cidade" maxlength="100" required>
+                <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly>
             </div>
             <div>
                 <label for="estado">Estado</label>
-                <input type="text" name="estado" id="estado" required>
+                <input type="text" name="estado" id="estado" class="grey-text text-darken-1" required readonly>
             </div>
         </div>
         <?= form_close(); ?>
