@@ -174,7 +174,7 @@
             </div>
             <div>
                 <label for="numero">Número</label>
-                <input type="text" name="numero" id="numero">
+                <input type="number" name="numero" id="numero" min="1">
             </div>
             <div>
                 <label for="complemento">Complemento</label>
