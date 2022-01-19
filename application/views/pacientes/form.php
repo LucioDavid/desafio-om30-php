@@ -81,6 +81,53 @@
                     limpa_formulário_cep();
                 }
             });
+
+            $("#cpf").blur(function() {
+
+                //Nova variável "cpf" somente com dígitos.
+                let cpf = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cpf foi preenchido completamente
+                if (cpf != "" && cpf.length == 11) {
+
+                    //Verifica se o cpf tem todos os dígitos repetidos (ignora os verificadores)
+                    if (cpf[0] == cpf[1] && cpf[1] == cpf[2] && cpf[2] == cpf[3] && cpf[3] == cpf[4] && cpf[4] == cpf[5] && cpf[5] == cpf[6] && cpf[6] == cpf[7] && cpf[7] == cpf[8]) {
+                        $(this).attr('class', 'validate invalid');
+                    } else {
+                        //Os digitos não são todos repetidos
+                        //Armazena digitos a serem verificados (primeiros nove), de trás para a frente
+                        let digitos = [];
+                        for (let i = 8; i >= 0; i--) {
+                            digitos.push(cpf[i]);
+                        }
+
+                        //Cálculo do dígito verificador 'v1'
+                        let v1 = 0;
+                        for (let i = 0; i < 9; i++) {
+                            v1 = v1 + digitos[i] * (9 - (i % 10));
+                        }
+                        v1 = (v1 % 11) % 10;
+
+                        // cálculo do dígito verificador 'v2'
+                        let v2 = 0;
+                        for (let i = 0; i < 9; i++) {
+                            v2 = v2 + digitos[i] * (9 - ((i + 1) % 10));
+                        }
+                        v2 = (v2 + v1 * 9) % 11;
+                        v2 = v2 % 10;
+
+                        //Verifica se os dígitos verificadores calculados correspondem com os informados
+                        if (v1 == cpf[9] && v2 == cpf[10]) {
+                            $(this).attr('class', 'validate valid');
+                        } else {
+                            $(this).attr('class', 'validate invalid');
+                        }
+                    }
+                } else {
+                    //Campo cpf incompleto
+                    $(this).attr('class', 'validate invalid');
+                }
+            });
         });
     </script>
     <script>
@@ -105,8 +152,8 @@
             let v = i.value;
 
             v = v.replace(/\D/g, "") //Remove tudo o que não é dígito
-            v = v.replace(/(\d{2})(\d)/, "$1.$2") 
-            v = v.replace(/(\d{3})(\d{1,3})$/, "$1-$2") 
+            v = v.replace(/(\d{2})(\d)/, "$1.$2")
+            v = v.replace(/(\d{3})(\d{1,3})$/, "$1-$2")
             i.value = v;
         }
 
@@ -143,7 +190,8 @@
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" id="cpf" oninput="mascara_cpf(this)" maxlength="14" required>
+                    <input type="text" name="cpf" id="cpf" class="validate" oninput="mascara_cpf(this)" maxlength="14" required>
+                    <span class="helper-text" data-error="CPF inválido" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
