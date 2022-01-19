@@ -128,6 +128,76 @@
                     $(this).attr('class', 'validate invalid');
                 }
             });
+
+            $("#cns").blur(function() {
+
+                //Nova variável "cns" somente com dígitos.
+                let cns = $(this).val().replace(/\D/g, '');
+
+                if (cns.length != 15) {
+                    $(this).attr('class', 'validate invalid');
+                } else {
+                    if (cns[0] == 1 || cns[0] == 2) {
+                        let soma = 0;
+                        let resto;
+                        let dv;
+                        let pis = new String("");
+                        let resultado = new String("");
+
+                        pis = cns.substr(0, 11);
+
+                        for (let i = 0; i < 11; i++) {
+                            soma = soma + pis[i] * (15 - i);
+                        }
+
+                        resto = soma % 11;
+                        dv = 11 - resto;
+
+                        if (dv == 11) {
+                            dv = 0;
+                        }
+
+                        if (dv == 10) {
+                            soma = 0;
+                            for (let i = 0; i < 11; i++) {
+                                soma = soma + pis[i] * (15 - i);
+                            }
+                            soma = soma + 2;
+
+                            resto = soma % 11;
+                            dv = 11 - resto;
+                            resultado = pis + "001" + String(dv);
+                        } else {
+                            resultado = pis + "000" + String(dv);
+                        }
+
+                        if (cns != resultado) {
+                            $(this).attr('class', 'validate invalid');
+                        } else {
+                            $(this).attr('class', 'validate valid');
+                        }
+                    } else if (cns[0] == 7 || cns[0] == 8 || cns[0] == 9) {
+                        let soma = 0;
+                        let resto;
+                        let dv;
+
+                        for (let i = 0; i < 15; i++) {
+                            soma = soma + cns[i] * (15 - i);
+                        }
+
+                        resto = soma % 11;
+
+                        if (resto != 0) {
+                            $(this).attr('class', 'validate invalid');
+                        } else {
+                            $(this).attr('class', 'validate valid');
+                        } 
+                    } else {
+                        $(this).attr('class', 'validate invalid');
+                    }
+
+                }
+            });
         });
     </script>
     <script>
@@ -195,7 +265,8 @@
                 </div>
                 <div class="input-field col s12 m6">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
-                    <input type="text" name="cns" id="cns" oninput="mascara_cns(this)" maxlength="18" required>
+                    <input type="text" name="cns" id="cns" class="validate" oninput="mascara_cns(this)" maxlength="18" required>
+                    <span class="helper-text" data-error="CNS inválido" data-success=""></span>
                 </div>
             </div>
         </div>
