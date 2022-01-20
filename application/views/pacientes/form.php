@@ -205,6 +205,20 @@
 
                 }
             });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#foto').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#foto_input").change(function() {
+                readURL(this);
+            });
         });
     </script>
     <script>
@@ -257,22 +271,31 @@
         <?= form_open_multipart('pacientes/armazenar'); ?>
         <div class="card-panel">
             <div class="row">
-                <div class="input-field col s12 m8 l9">
+                <div class="file-field input-field col s12 m3 l2">
+                    <div>
+                        <img id="foto" src="http://localhost/assets/imgs/paciente_foto_placeholder.jpg" alt="" class="responsive-img">
+                    </div>
+                    <div class="btn" style="width: 100%;">
+                        <span>Carregar Foto</span>
+                        <input type="file" name="foto" id="foto_input" accept="image/*">
+                    </div>
+                </div>
+                <div class="input-field col s12 m9 l8">
                     <label for="nome">Nome Completo</label>
                     <input type="text" name="nome" id="nome" maxlength="100" class="validate" required>
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12 m4 l3">
+                <div class="input-field col s12 m3 l2">
                     <label for="data_nasc">Data de Nascimento</label>
                     <input type="date" placeholder=" " name="data_nasc" id="data_nasc" class="validate" required>
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12 m3 l5">
                     <label for="cpf">CPF</label>
                     <input type="text" name="cpf" id="cpf" class="validate" oninput="mascara_cpf(this)" maxlength="14" required>
                     <span class="helper-text" data-error="CPF inválido" data-success=""></span>
                 </div>
-                <div class="input-field col s12 m6">
+                <div class="input-field col s12 m3 l5">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
                     <input type="text" name="cns" id="cns" class="validate" oninput="mascara_cns(this)" maxlength="18" required>
                     <span class="helper-text" data-error="CNS inválido" data-success=""></span>
