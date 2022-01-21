@@ -8,10 +8,6 @@ class Migration_Add_enderecos extends CI_Migration {
     {
         $this->load->dbforge();
 
-        $this->db->query(
-            "CREATE TYPE UF AS ENUM ('AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO');"
-        );
-
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -40,10 +36,12 @@ class Migration_Add_enderecos extends CI_Migration {
                 'type' => 'VARCHAR',
                 'constraint' => '100',
             ),
-            'estado' => array(
-                'type' => 'UF',
+            'estado_id' => array(
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
             ),
-            'CEP' => array(
+            'cep' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '8',
             ),
@@ -57,6 +55,10 @@ class Migration_Add_enderecos extends CI_Migration {
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('enderecos', TRUE);
+
+        $this->db->query(
+            'ALTER TABLE enderecos ADD CONSTRAINT estado_id FOREIGN KEY (estado_id) REFERENCES estados(id);'
+        );
     }
 
     public function down()
