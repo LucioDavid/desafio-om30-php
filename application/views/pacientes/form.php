@@ -15,12 +15,12 @@
                         <input type="file" name="foto" id="foto_input" accept=".jpg, .jpeg, .png">
                     </div>
                 </div>
-                <div class="input-field col s12 m9 l8">
+                <div class="input-field col s12 m9 l7">
                     <label for="nome">Nome Completo</label>
                     <input type="text" name="nome" id="nome" maxlength="100" class="validate" required>
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12 m3 l2">
+                <div class="input-field col s12 m3 l3">
                     <label for="data_nasc">Data de Nascimento</label>
                     <input type="date" placeholder=" " name="data_nasc" id="data_nasc" class="validate" required>
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
