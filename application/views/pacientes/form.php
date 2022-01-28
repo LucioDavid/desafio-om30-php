@@ -2,7 +2,7 @@
     <h1 class="center"><?= $titulo_pagina ?></h1>
 
     <h4>Dados Pessoais</h4>
-    <form action="pacientes/armazenar" method="post" enctype="multipart/form-data">
+    <form action="/pacientes/create" method="post" enctype="multipart/form-data">
         <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
         <div class="card-panel">
             <div class="row">
