@@ -6,15 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/public/assets/vendor/css/materialicons.css" rel="stylesheet">
+    <link href="/public/assets/vendor/css/materialize.css" rel="stylesheet">
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="/assets/js/jquery.mask.js"></script>
+    <script src="/public/assets/vendor/js/jquery-3.6.0.js"></script>
+    <script src="/public/assets/vendor/js/materialize.js"></script>
+    <script src="/public/assets/vendor/js/jquery.mask.js"></script>
 </head>
 
 <body>
@@ -30,7 +27,7 @@
                 <div class="row">
                     <div class="file-field input-field col s12 m3 l2">
                         <div>
-                            <img id="foto" src="http://localhost/assets/imgs/paciente_foto_placeholder.jpg" alt="" class="responsive-img">
+                            <img id="foto" src="/public/assets/imgs/paciente_foto_placeholder.jpg" alt="" class="responsive-img">
                         </div>
                         <div class="btn" style="width: 100%;">
                             <span>Carregar Foto</span>
@@ -111,7 +108,7 @@
         </form>
     </div>
 
-<script src="/assets/js/form.js"></script>
+<script src="/public/assets/js/form.js"></script>
 </body>
 
 </html>
