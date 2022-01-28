@@ -19,7 +19,7 @@ class MY_Model extends CI_Model
 
     public function findAll()
     {
-        return $this->db->select("*")->from($this->table)->result_array();
+        return $this->db->get($this->table)->result_array();
     }
 
     public function findById($id)
