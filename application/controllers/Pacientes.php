@@ -26,7 +26,12 @@ class Pacientes extends CI_Controller
     public function add()
     {
         $this->dados['titulo_pagina'] = "Criar Paciente";
+        $this->dados['scripts'] = array(
+            '/public/assets/js/form.js',
+        );
 
+        $this->load->view('templates/head', $this->dados);
         $this->load->view('pacientes/form', $this->dados);
+        $this->load->view('templates/footer', $this->dados);
     }
 }
