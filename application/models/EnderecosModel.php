@@ -3,12 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class EnderecosModel extends MY_Model
 {
-    public function __construct()
-    {
-        $this->table = 'enderecos';
-        $this->primary_key = 'id';
-        $this->timestamps = array('criado_em', 'modif_em');
-
-        parent::__construct();
-    }
+    protected $table = 'enderecos';
+    protected $primaryKey = 'id';
+    protected $timestamps = array('criado_em', 'modif_em');
 }
