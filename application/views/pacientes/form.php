@@ -46,7 +46,7 @@
                     </div>
                     <div class="input-field col s12 m3 l5">
                         <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" class=" validate" maxlength="14" required>
+                        <input type="text" name="cpf" id="cpf" class="cpf validate" maxlength="14" required>
                         <span class="helper-text" data-error="CPF inválido" data-success=""></span>
                     </div>
                     <div class="input-field col s12 m3 l5">
