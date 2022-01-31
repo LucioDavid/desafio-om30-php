@@ -18,6 +18,7 @@ class Migration_Add_estados extends CI_Migration {
             'uf' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '2',
+                'unique' => TRUE,
             ),
             'nome' => array(
                 'type' => 'VARCHAR',

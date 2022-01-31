@@ -43,7 +43,7 @@ class Migration_Add_enderecos extends CI_Migration {
             ),
             'cep' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '8',
+                'constraint' => '10',
             ),
             'criado_em' => array(
                 'type' => 'TIMESTAMP WITH TIME ZONE',
