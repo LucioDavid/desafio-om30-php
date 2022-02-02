@@ -13,6 +13,8 @@ class Pacientes extends CI_Controller
             'hash' => $this->security->get_csrf_hash()
         );
         $this->load->model('PacientesModel');
+        $this->load->model('EnderecosModel');
+        $this->load->model('EstadosModel');
     }
 
     public function index()
@@ -20,18 +22,131 @@ class Pacientes extends CI_Controller
         $this->dados['pacientes'] = $this->PacientesModel->findAll();
 
         $this->dados['titulo_pagina'] = "Pacientes";
+        $this->load->view('templates/head', $this->dados);
         $this->load->view('pacientes/index', $this->dados);
+        $this->load->view('templates/footer', $this->dados);
     }
 
     public function add()
     {
-        $this->dados['titulo_pagina'] = "Criar Paciente";
-        $this->dados['scripts'] = array(
-            '/public/assets/js/form.js',
-        );
+        $this->dados['estados'] = $this->EstadosModel->findAll();
+
+        $this->dados['titulo_pagina'] = "Cadastrar Paciente";
 
         $this->load->view('templates/head', $this->dados);
         $this->load->view('pacientes/form', $this->dados);
         $this->load->view('templates/footer', $this->dados);
+    }
+
+    public function create()
+    {
+        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]');
+        $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+        $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]');
+        $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]');
+        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]');
+        $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
+        $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
+        $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
+        $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
+        $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
+        $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
+        $this->form_validation->set_rules('estado_id', 'Estado', 'required');
+
+        if ($this->form_validation->run()) {
+            $idEndereco = $this->EnderecosModel->insert([
+                'logradouro' => $this->input->post('logradouro'),
+                'numero' => !empty($this->input->post('numero')) ? $this->input->post('numero') : null,
+                'complemento' => !empty($this->input->post('complemento')) ? $this->input->post('complemento') : null,
+                'bairro' => $this->input->post('bairro'),
+                'cidade' => $this->input->post('cidade'),
+                'estado_id' => $this->input->post('estado_id'),
+                'cep' => $this->input->post('cep'),
+            ]);
+
+            $this->PacientesModel->insert([
+                'foto' => null,
+                'nome' => $this->input->post('nome'),
+                'nome_mae' => $this->input->post('nome_mae'),
+                'data_nasc' => $this->input->post('data_nasc'),
+                'cpf' => $this->input->post('cpf'),
+                'cns' => $this->input->post('cns'),
+                'endereco_id' => $idEndereco,
+            ]);
+
+            redirect('pacientes');
+        } else {
+            $this->dados['titulo_pagina'] = "Cadastrar Paciente";
+            $this->load->view('templates/head', $this->dados);
+            $this->load->view('pacientes/form', $this->dados);
+            $this->load->view('templates/footer', $this->dados);
+        }
+    }
+
+    public function edit($id)
+    {
+        $this->dados['estados'] = $this->EstadosModel->findAll();
+        $this->dados['paciente'] = $this->PacientesModel->findById($id);
+        $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
+
+        $this->dados['titulo_pagina'] = "Editar Paciente";
+
+        $this->load->view('templates/head', $this->dados);
+        $this->load->view('pacientes/edit', $this->dados);
+        $this->load->view('templates/footer', $this->dados);
+    }
+
+    public function update($id)
+    {
+        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]');
+        $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+        $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]');
+        $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]');
+        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]');
+        $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
+        $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
+        $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
+        $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
+        $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
+        $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
+        $this->form_validation->set_rules('estado_id', 'Estado', 'required');
+
+        if ($this->form_validation->run()) {
+            $paciente = $this->PacientesModel->findById($id);
+
+            $this->PacientesModel->update($paciente['id'], [
+                'foto' => null,
+                'nome' => $this->input->post('nome'),
+                'nome_mae' => $this->input->post('nome_mae'),
+                'data_nasc' => $this->input->post('data_nasc'),
+                'cpf' => $this->input->post('cpf'),
+                'cns' => $this->input->post('cns'),
+            ]);
+
+            $this->EnderecosModel->update($paciente['endereco_id'], [
+                'logradouro' => $this->input->post('logradouro'),
+                'numero' => !empty($this->input->post('numero')) ? $this->input->post('numero') : null,
+                'complemento' => !empty($this->input->post('complemento')) ? $this->input->post('complemento') : null,
+                'bairro' => $this->input->post('bairro'),
+                'cidade' => $this->input->post('cidade'),
+                'estado_id' => $this->input->post('estado_id'),
+                'cep' => $this->input->post('cep'),
+            ]);
+
+            redirect('pacientes');
+        } else {
+            $this->dados['titulo_pagina'] = "Cadastrar Paciente";
+            $this->load->view('templates/head', $this->dados);
+            $this->load->view('pacientes/form', $this->dados);
+            $this->load->view('templates/footer', $this->dados);
+        }
+    }
+
+    public function delete($id)
+    {
+        $paciente = $this->PacientesModel->findById($id);
+        $this->PacientesModel->delete($paciente['id']) || redirect('pacientes');
+        $this->EnderecosModel->delete($paciente['endereco_id']) || redirect('pacientes');
+        redirect('pacientes');
     }
 }

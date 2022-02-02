@@ -9,6 +9,7 @@
 
     <link href="/public/assets/vendor/css/materialicons.css" rel="stylesheet">
     <link href="/public/assets/vendor/css/materialize.css" rel="stylesheet">
+    <link href="/public/assets/vendor/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
 
     <style>
         .footer-padrao {
@@ -18,4 +19,20 @@
 </head>
 
 <body>
+    <script src="/public/assets/vendor/js/jquery-3.6.0.js"></script>
+    <script src="/public/assets/vendor/js/materialize.js"></script>
+    <script src="/public/assets/vendor/js/jquery.mask.js"></script>
+    <script src="/public/assets/vendor/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script>
+        $(function() {
+            $('#minhaTabela').DataTable({
+                language: {
+                    url: '/public/assets/localization/pt_br.json'
+                },
+                "lengthChange": false
+            });
+        });
+        $('.modal').modal();
+    </script>
+
     <main>

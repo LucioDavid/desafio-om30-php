@@ -25,7 +25,7 @@ class MY_Model extends CI_Model
     public function findById($id)
     {
         $this->db->where($this->primaryKey, $id);
-        return $this->db->get($this->table);
+        return $this->db->get($this->table)->row_array();
     }
 
     public function insert($dados)
@@ -34,7 +34,9 @@ class MY_Model extends CI_Model
             $dados[$this->_createdAtField] = $this->_theTimestamp();
         }
 
-        return $this->db->insert($this->table, $dados);
+        $this->db->insert($this->table, $dados);
+        
+        return $this->db->insert_id();
     }
 
     public function update($id, $dados)
@@ -57,10 +59,10 @@ class MY_Model extends CI_Model
 
     private function _theTimestamp()
     {
-        if ($this->timestamps_format == 'timestamp') {
+        if ($this->timestampsFormat == 'timestamp') {
             return time();
         } else {
-            return date($this->timestamps_format);
+            return date($this->timestampsFormat);
         }
     }
 

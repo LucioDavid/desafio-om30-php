@@ -216,4 +216,6 @@ $(function() {
     if ($('.cep').length){
         $('.cep').mask('00.000-000');
     }
+
+    $('select').formSelect();
 });
