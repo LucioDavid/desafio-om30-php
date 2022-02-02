@@ -106,4 +106,4 @@
     </form>
 </div>
 
-<script src="<?= base_url('public/assets/js/form.js') ?>"></script>
+<script src="<?= base_url('public/assets/js/custom/pacientes-edit.js') ?>"></script>
