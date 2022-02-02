@@ -32,12 +32,12 @@
                 <div class="input-field col s12 m3 l5">
                     <label for="cpf">CPF</label>
                     <input type="text" name="cpf" id="cpf" class="cpf validate" maxlength="14" required value="<?= isset($paciente['cpf']) ? $paciente['cpf'] : '' ?>">
-                    <span class="helper-text" data-error="CPF inválido" data-success=""></span>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m3 l5">
                     <label for="cns">CNS – Cartão Nacional de Saúde</label>
                     <input type="text" name="cns" id="cns" class="cns validate" maxlength="18" required value="<?= isset($paciente['cns']) ? $paciente['cns'] : '' ?>">
-                    <span class="helper-text" data-error="CNS inválido" data-success=""></span>
+                    <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
                     <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly value="<?= isset($endereco['cidade']) ? $endereco['cidade'] : '' ?>">
                 </div>
                 <div class="input-field col s12">
-                    <select name="estado_id" class="validate" required>
+                    <select name="estado_id">
                         <option value="" disabled <?= isset($estado['id']) ? '' : 'selected' ?>>Selecione o Estado</option>
                         <?php foreach($estados as $estado) { ?>
                             <option value="<?= $estado['id'] ?>" <?= isset($estado['id'], $endereco['estado_id']) && $estado['id'] == $endereco['estado_id'] ? 'selected' : '' ?>><?= $estado['uf'] ?></option>

@@ -40,11 +40,11 @@ class Pacientes extends CI_Controller
 
     public function create()
     {
-        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]');
+        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]|valida_nome_completo');
         $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
-        $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]');
-        $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]');
-        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]');
+        $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf|is_unique[pacientes.cpf]');
+        $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]|valida_cns|is_unique[pacientes.cns]');
+        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]|valida_nome_completo');
         $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
         $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
         $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
@@ -93,72 +93,87 @@ class Pacientes extends CI_Controller
 
     public function edit($id)
     {
-        $this->dados['estados'] = $this->EstadosModel->findAll();
         $this->dados['paciente'] = $this->PacientesModel->findById($id);
-        $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
-
-        $this->dados['titulo_pagina'] = "Editar Paciente";
-
-        $this->load->view('templates/head', $this->dados);
-        $this->load->view('pacientes/edit', $this->dados);
-        $this->load->view('templates/footer', $this->dados);
+        if(isset($this->dados['paciente'])){
+            $this->dados['estados'] = $this->EstadosModel->findAll();
+            $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
+    
+            $this->dados['titulo_pagina'] = "Editar Paciente";
+    
+            $this->load->view('templates/head', $this->dados);
+            $this->load->view('pacientes/edit', $this->dados);
+            $this->load->view('templates/footer', $this->dados);
+            return;
+        }
+        
+        show_404();
     }
 
     public function update($id)
     {
-        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]');
-        $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
-        $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]');
-        $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]');
-        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]');
-        $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
-        $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
-        $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
-        $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
-        $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
-        $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
-        $this->form_validation->set_rules('estado_id', 'Estado', 'required');
+        $paciente = $this->PacientesModel->findById($id);
+        if(isset($paciente)){
+            $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]|valida_nome_completo');
+            $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+            $is_unique = $this->input->post('cpf') == $paciente['cpf'] ? '' : '|is_unique[pacientes.cpf]';
+            $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf' . $is_unique);
+            $is_unique = $this->input->post('cns') == $paciente['cns'] ? '' : '|is_unique[pacientes.cns]';
+            $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]|valida_cns' . $is_unique);
+            $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]|valida_nome_completo');
+            $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
+            $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
+            $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
+            $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
+            $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
+            $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
+            $this->form_validation->set_rules('estado_id', 'Estado', 'required');
 
-        if ($this->form_validation->run()) {
-            $paciente = $this->PacientesModel->findById($id);
+            if ($this->form_validation->run()) {
+                $this->PacientesModel->update($paciente['id'], [
+                    'foto' => null,
+                    'nome' => $this->input->post('nome'),
+                    'nome_mae' => $this->input->post('nome_mae'),
+                    'data_nasc' => $this->input->post('data_nasc'),
+                    'cpf' => $this->input->post('cpf'),
+                    'cns' => $this->input->post('cns'),
+                ]);
 
-            $this->PacientesModel->update($paciente['id'], [
-                'foto' => null,
-                'nome' => $this->input->post('nome'),
-                'nome_mae' => $this->input->post('nome_mae'),
-                'data_nasc' => $this->input->post('data_nasc'),
-                'cpf' => $this->input->post('cpf'),
-                'cns' => $this->input->post('cns'),
-            ]);
+                $this->EnderecosModel->update($paciente['endereco_id'], [
+                    'logradouro' => $this->input->post('logradouro'),
+                    'numero' => !empty($this->input->post('numero')) ? $this->input->post('numero') : null,
+                    'complemento' => !empty($this->input->post('complemento')) ? $this->input->post('complemento') : null,
+                    'bairro' => $this->input->post('bairro'),
+                    'cidade' => $this->input->post('cidade'),
+                    'estado_id' => $this->input->post('estado_id'),
+                    'cep' => $this->input->post('cep'),
+                ]);
 
-            $this->EnderecosModel->update($paciente['endereco_id'], [
-                'logradouro' => $this->input->post('logradouro'),
-                'numero' => !empty($this->input->post('numero')) ? $this->input->post('numero') : null,
-                'complemento' => !empty($this->input->post('complemento')) ? $this->input->post('complemento') : null,
-                'bairro' => $this->input->post('bairro'),
-                'cidade' => $this->input->post('cidade'),
-                'estado_id' => $this->input->post('estado_id'),
-                'cep' => $this->input->post('cep'),
-            ]);
+                redirect('pacientes');
+            } else {
+                $this->dados['estados'] = $this->EstadosModel->findAll();
+                $this->dados['paciente'] = $this->PacientesModel->findById($id);
+                $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
 
-            redirect('pacientes');
-        } else {
-            $this->dados['estados'] = $this->EstadosModel->findAll();
-            $this->dados['paciente'] = $this->PacientesModel->findById($id);
-            $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
-
-            $this->dados['titulo_pagina'] = "Editar Paciente";
-            $this->load->view('templates/head', $this->dados);
-            $this->load->view('pacientes/edit', $this->dados);
-            $this->load->view('templates/footer', $this->dados);
+                $this->dados['titulo_pagina'] = "Editar Paciente";
+                $this->load->view('templates/head', $this->dados);
+                $this->load->view('pacientes/edit', $this->dados);
+                $this->load->view('templates/footer', $this->dados);
+            }
+            return;
         }
+
+        show_404();
     }
 
     public function delete($id)
     {
         $paciente = $this->PacientesModel->findById($id);
-        $this->PacientesModel->delete($paciente['id']) || redirect('pacientes');
-        $this->EnderecosModel->delete($paciente['endereco_id']) || redirect('pacientes');
-        redirect('pacientes');
+        if(isset($paciente)){
+            $this->PacientesModel->delete($paciente['id']) || redirect('pacientes');
+            $this->EnderecosModel->delete($paciente['endereco_id']) || redirect('pacientes');
+            return redirect('pacientes');
+        }
+
+        show_404();
     }
 }
