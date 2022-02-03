@@ -12,9 +12,9 @@ class MY_Form_validation extends CI_Form_validation
 
     public function valida_nome_completo($nome)
     {
-        $this->CI->form_validation->set_message('valida_nome_completo', 'O %s é inválido.');
+        $this->CI->form_validation->set_message('valida_nome_completo', 'O %s deve conter somente letras, com iniciais maiúsculas.');
         
-        if (! preg_match("/^([a-zA-ZÀ-ü' \-]+)$/", $nome)) {
+        if (! preg_match("/^([A-ZÀ-Ü]{1}[a-zà-ü]+)(((\s|\-){1}([a-zà-ü]{1,3}))?(\s|\-){1}[A-ZÀ-Ü]{1}(([a-zà-ü]+)?'[A-ZÀ-Ü]{1})?[a-zà-ü]+)+$/u", $nome)) {
             return FALSE;
         }
         return TRUE;
