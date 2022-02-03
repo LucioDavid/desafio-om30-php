@@ -40,18 +40,18 @@ class Pacientes extends CI_Controller
 
     public function create()
     {
-        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]|valida_nome_completo');
+        $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|trim|max_length[100]|valida_nome_completo');
         $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
         $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf|is_unique[pacientes.cpf]');
         $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]|valida_cns|is_unique[pacientes.cns]');
-        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]|valida_nome_completo');
+        $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|trim|max_length[100]|valida_nome_completo');
         $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
         $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
         $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
         $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
         $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
         $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
-        $this->form_validation->set_rules('estado_id', 'Estado', 'required');
+        $this->form_validation->set_rules('estado_id', 'Estado', 'required|in_list[' . $this->listarEstadosId() . ']');
 
         $paciente = [
             'foto' => null,
@@ -113,20 +113,23 @@ class Pacientes extends CI_Controller
     {
         $paciente = $this->PacientesModel->findById($id);
         if(isset($paciente)){
-            $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|max_length[100]|valida_nome_completo');
+            $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|trim|max_length[100]|valida_nome_completo');
             $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+            
             $is_unique = $this->input->post('cpf') == $paciente['cpf'] ? '' : '|is_unique[pacientes.cpf]';
             $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf' . $is_unique);
+            
             $is_unique = $this->input->post('cns') == $paciente['cns'] ? '' : '|is_unique[pacientes.cns]';
             $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]|valida_cns' . $is_unique);
-            $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|max_length[100]|valida_nome_completo');
+            
+            $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|trim|max_length[100]|valida_nome_completo');
             $this->form_validation->set_rules('cep', 'CEP', 'required|exact_length[10]');
             $this->form_validation->set_rules('logradouro', 'Logradouro', 'required|max_length[100]');
             $this->form_validation->set_rules('numero', 'Número do Endereço', 'numeric');
             $this->form_validation->set_rules('complemento', 'Complemento', 'max_length[100]');
             $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
             $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
-            $this->form_validation->set_rules('estado_id', 'Estado', 'required');
+            $this->form_validation->set_rules('estado_id', 'Estado', 'required|in_list[' . $this->listarEstadosId() . ']');
 
             if ($this->form_validation->run()) {
                 $this->PacientesModel->update($paciente['id'], [
@@ -175,5 +178,16 @@ class Pacientes extends CI_Controller
         }
 
         show_404();
+    }
+
+    private function listarEstadosId()
+    {
+        $estados = $this->EstadosModel->findAll();
+        
+        foreach ($estados as $estado) {
+            $estados_array[] = $estado['id'];
+        }
+
+        return implode(',', $estados_array);
     }
 }
