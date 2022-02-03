@@ -23,7 +23,7 @@
             <?php foreach ($pacientes as $paciente) : ?>
                 <tr>
                     <td class="center"><?= $paciente['id'] ?></td>
-                    <td><?= $paciente['foto'] ?></td>
+                    <td><img height="48px" src="<?= isset($paciente['foto']) ? base_url('public/uploads/' . $paciente['foto']) : '/public/assets/imgs/paciente_foto_placeholder.jpg' ?>" alt="foto_de_perfil"></td>
                     <td><?= $paciente['nome'] ?></td>
                     <td><?= date("d/m/Y", strtotime($paciente['data_nasc'])); ?></td>
                     <td><?= $paciente['cpf'] ?></td>

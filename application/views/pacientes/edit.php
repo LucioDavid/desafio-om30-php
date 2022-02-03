@@ -2,7 +2,8 @@
     <h1 class="center"><?= $titulo_pagina ?></h1>
 
     <p>
-        <?php echo validation_errors(); ?>
+        <?= isset($erros_upload) ? $erros_upload : '' ?>
+        <?= validation_errors(); ?>
     </p>
 
     <h4>Dados Pessoais</h4>
@@ -12,11 +13,11 @@
             <div class="row">
                 <div class="file-field input-field col s12 m3 l2">
                     <div>
-                        <img id="foto" src="/public/assets/imgs/paciente_foto_placeholder.jpg" alt="" class="responsive-img">
+                        <img id="foto" src="<?= isset($paciente['foto']) ? base_url('public/uploads/' . $paciente['foto']) : '/public/assets/imgs/paciente_foto_placeholder.jpg' ?>" alt="" class="responsive-img">
                     </div>
                     <div class="btn" style="width: 100%;">
-                        <span>Carregar Foto</span>
-                        <input type="file" name="foto" id="foto_input" accept=".jpg, .jpeg, .png" value="<?= $paciente['foto'] ?>">
+                        <span>Foto</span>
+                        <input type="file" name="foto" id="foto_input" accept=".jpg, .jpeg, .png">
                     </div>
                 </div>
                 <div class="input-field col s12 m9 l7">

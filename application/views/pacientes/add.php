@@ -2,7 +2,8 @@
     <h1 class="center"><?= $titulo_pagina ?></h1>
 
     <p>
-        <?php echo validation_errors(); ?>
+        <?= isset($erros_upload) ? $erros_upload : '' ?>
+        <?= validation_errors(); ?>
     </p>
 
     <h4>Dados Pessoais</h4>
@@ -15,7 +16,7 @@
                         <img id="foto" src="/public/assets/imgs/paciente_foto_placeholder.jpg" alt="" class="responsive-img">
                     </div>
                     <div class="btn" style="width: 100%;">
-                        <span>Carregar Foto</span>
+                        <span>Foto</span>
                         <input type="file" name="foto" id="foto_input" accept=".jpg, .jpeg, .png" value="<?= isset($paciente['foto']) ? $paciente['foto'] : '' ?>">
                     </div>
                 </div>
@@ -35,8 +36,8 @@
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m3 l5">
-                    <label for="cns">CNS – Cartão Nacional de Saúde</label>
-                    <input type="text" name="cns" id="cns" class="cns validate" maxlength="18" required value="<?= isset($paciente['cns']) ? $paciente['cns'] : '' ?>">
+                    <label for="cns">CNS</label>
+                    <input title="Cartão Nacional de Saúde" type="text" name="cns" id="cns" class="cns validate" maxlength="18" required value="<?= isset($paciente['cns']) ? $paciente['cns'] : '' ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
             </div>

@@ -72,14 +72,55 @@ class Pacientes extends CI_Controller
             'cep' => $this->input->post('cep'),
         ];
 
+        $config['upload_path'] = './public/uploads/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 1024;
+        $config['max_width'] = 2048;
+        $config['max_height'] = 2048;
+
+        $this->load->library('upload', $config);
+
         if ($this->form_validation->run()) {
-            $idEndereco = $this->EnderecosModel->insert($endereco);
-            $paciente['endereco_id'] = $idEndereco;
+            //Foi feito uplod da foto no formulário
+            if($_FILES['foto']['name'] !== ''){
+                //Upload concluído com sucesso
+                if ($this->upload->do_upload('foto')) {
 
-            $this->PacientesModel->insert($paciente);
+                    $idEndereco = $this->EnderecosModel->insert($endereco);
+                    
+                    $paciente['foto'] = $this->upload->data('file_name');
+                    $paciente['endereco_id'] = $idEndereco;
+        
+                    $this->PacientesModel->insert($paciente);
+        
+                    redirect('pacientes');
+                }
+                //Erro(s) no upload da foto
+                else {
+                    $this->dados['erros_upload'] = $this->upload->display_errors();
+                    $this->dados['estados'] = $this->EstadosModel->findAll();
+                    $this->dados['paciente'] = $paciente;
+                    $this->dados['endereco'] = $endereco;
+        
+                    $this->dados['titulo_pagina'] = "Cadastrar Paciente";
+                    $this->load->view('templates/head', $this->dados);
+                    $this->load->view('pacientes/add', $this->dados);
+                    $this->load->view('templates/footer', $this->dados);
+                }
+            }
+            //Não há foto no formulário
+            else {
+                $idEndereco = $this->EnderecosModel->insert($endereco);
 
-            redirect('pacientes');
-        } else {
+                $paciente['endereco_id'] = $idEndereco;
+
+                $this->PacientesModel->insert($paciente);
+
+                redirect('pacientes');
+            }
+        }
+        //Houve erro(s) de validação no formulário
+        else {
             $this->dados['estados'] = $this->EstadosModel->findAll();
             $this->dados['paciente'] = $paciente;
             $this->dados['endereco'] = $endereco;
@@ -131,15 +172,44 @@ class Pacientes extends CI_Controller
             $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
             $this->form_validation->set_rules('estado_id', 'Estado', 'required|in_list[' . $this->listarEstadosId() . ']');
 
+            $config['upload_path'] = './public/uploads/';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = 1024;
+            $config['max_width'] = 2048;
+            $config['max_height'] = 2048;
+    
+            $this->load->library('upload', $config);
+
             if ($this->form_validation->run()) {
-                $this->PacientesModel->update($paciente['id'], [
-                    'foto' => null,
+                $pacienteDados = [
                     'nome' => $this->input->post('nome'),
                     'nome_mae' => $this->input->post('nome_mae'),
                     'data_nasc' => $this->input->post('data_nasc'),
                     'cpf' => $this->input->post('cpf'),
                     'cns' => $this->input->post('cns'),
-                ]);
+                ];
+
+                if($_FILES['foto']['name'] !== ''){
+                    if($this->upload->do_upload('foto')){
+                        $pacienteDados['foto'] = $this->upload->data('file_name');
+                        
+                        //Remove a foto antiga
+                        unlink($config['upload_path'] . $paciente['foto']);
+                    }
+                    else {
+                        $this->dados['erros_upload'] = $this->upload->display_errors();
+                        $this->dados['estados'] = $this->EstadosModel->findAll();
+                        $this->dados['paciente'] = $paciente;
+                        $this->dados['endereco'] = $this->EnderecosModel->findById($this->dados['paciente']['endereco_id']);
+            
+                        $this->dados['titulo_pagina'] = "Cadastrar Paciente";
+                        $this->load->view('templates/head', $this->dados);
+                        $this->load->view('pacientes/add', $this->dados);
+                        $this->load->view('templates/footer', $this->dados);
+                    }
+                }
+                
+                $this->PacientesModel->update($paciente['id'], $pacienteDados);
 
                 $this->EnderecosModel->update($paciente['endereco_id'], [
                     'logradouro' => $this->input->post('logradouro'),
