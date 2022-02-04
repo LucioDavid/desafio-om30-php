@@ -10,7 +10,6 @@ $(function() {
         $("#logradouro").val("");
         $("#bairro").val("");
         $("#cidade").val("");
-        $("#estado").val("");
     }
 
     //Quando o campo cep perde o foco.
@@ -32,7 +31,6 @@ $(function() {
                 $("#logradouro").val("...");
                 $("#bairro").val("...");
                 $("#cidade").val("...");
-                $("#estado").val("...");
                 M.updateTextFields();
 
                 //Consulta o webservice viacep.com.br/
@@ -43,7 +41,14 @@ $(function() {
                         $("#logradouro").val(dados.logradouro);
                         $("#bairro").val(dados.bairro);
                         $("#cidade").val(dados.localidade);
-                        $("#estado").val(dados.uf);
+
+                        $("option").each(function(){
+                            $(this).text() == dados.uf ? $(this).attr('selected', 'selected') : $(this).attr('selected', null);
+                        });
+                        let formSelectInstance = M.FormSelect.getInstance($("#estado"));
+                        formSelectInstance.destroy();
+                        $('select').formSelect();
+
                         //Atualiza texto de ajuda/validação do campo "logradouro".
                         $("#logradouro").attr('class', 'validate valid');
                     } //end if.
