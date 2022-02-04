@@ -11,5 +11,6 @@ $(function() {
         "order": [[ 1, "asc" ]],
         responsive: true
     });
+    $('.modal').modal();
+    $('.fixed-action-btn').floatingActionButton();
 });
-$('.modal').modal();

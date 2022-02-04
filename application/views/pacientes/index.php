@@ -1,10 +1,12 @@
 <div class="container">
-    <h1 class="center"><?= $titulo_pagina ?></h1>
+    <h1 class="center teal-text"><?= $titulo_pagina ?></h1>
 
-    <a href="/pacientes/add" class="btn waves-effect waves-light right">
-        Cadastrar
-        <i class="material-icons right">add</i>
-    </a>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large" href="<?= base_url('pacientes/add') ?>">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+
 
     <table id="minhaTabela" class="display">
         <thead>
@@ -32,7 +34,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="<?= base_url('/pacientes/delete/' . $paciente['id']) ?>" class="btn waves-effect waves-light red">
+                        <a href="#modal<?= $paciente['id'] ?>" class="btn waves-effect waves-light red modal-trigger">
                             <i class="material-icons">delete</i>
                         </a>
                     </td>
@@ -41,5 +43,21 @@
         </tbody>
     </table>
 </div>
+
+<?php foreach ($pacientes as $paciente) : ?>
+    <div id="modal<?= $paciente['id'] ?>" class="modal">
+        <div class="modal-content">
+            <h4>Confirmar Exclusão</h4>
+            <p>Deseja mesmo escluir o paciente "<b><?= $paciente['nome'] ?></b>"?</p>
+        </div>
+        <div class="modal-footer">
+            <div class="center">
+                <div class="divider"></div>
+                <a class="modal-close waves-effect waves-light btn-flat red white-text" href="<?= base_url('/pacientes/delete/' . $paciente['id']) ?>">Excluir</a>
+                <a class="modal-close waves-effect waves-light btn-flat grey white-text" href="#!">Cancelar</a>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
 
 <script src="<?= base_url('public/assets/js/custom/pacientes-index.js') ?>"></script>
