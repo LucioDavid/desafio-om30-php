@@ -20,16 +20,20 @@ class MY_Form_validation extends CI_Form_validation
         return TRUE;
     }
 
-    // public function valida_data($data)
-    // {
-    //     $this->CI->form_validation->set_message('valida_data', 'A %s é inválida.');
-    //     // if ($data) { // do your validations
-    //     //     return TRUE;
-    //     // } else {
-    //     //     return FALSE;
-    //     // }
-    //     return FALSE;
-    // }
+    public function valida_data($data)
+    {
+        $this->CI->form_validation->set_message('valida_data', 'A %s é inválida.');
+        $formato = 'Y-m-d';
+
+        $d = DateTime::createFromFormat($formato, $data);
+        return $d && $d->format($formato) === $data;
+    }
+
+    public function valida_data_passado($data)
+    {
+        $this->CI->form_validation->set_message('valida_data_passado', 'A %s deve estar no passado.');
+        return strtotime($data) < time();
+    }
 
     public function valida_cpf($cpf)
     {

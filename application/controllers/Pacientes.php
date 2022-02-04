@@ -41,7 +41,7 @@ class Pacientes extends CI_Controller
     public function create()
     {
         $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|trim|max_length[100]|valida_nome_completo');
-        $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+        $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required|valida_data|valida_data_passado');
         $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf|is_unique[pacientes.cpf]');
         $this->form_validation->set_rules('cns', 'CNS', 'required|exact_length[18]|valida_cns|is_unique[pacientes.cns]');
         $this->form_validation->set_rules('nome_mae', 'Nome Completo da Mãe', 'required|trim|max_length[100]|valida_nome_completo');
@@ -155,7 +155,7 @@ class Pacientes extends CI_Controller
         $paciente = $this->PacientesModel->findById($id);
         if(isset($paciente)){
             $this->form_validation->set_rules('nome', 'Nome Completo do Paciente', 'required|trim|max_length[100]|valida_nome_completo');
-            $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required');
+            $this->form_validation->set_rules('data_nasc', 'Data de Nascimento', 'required|valida_data|valida_data_passado');
             
             $is_unique = $this->input->post('cpf') == $paciente['cpf'] ? '' : '|is_unique[pacientes.cpf]';
             $this->form_validation->set_rules('cpf', 'CPF', 'required|exact_length[14]|valida_cpf' . $is_unique);
