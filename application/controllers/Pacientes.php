@@ -5,6 +5,14 @@ class Pacientes extends CI_Controller
 {
     private $dados;
 
+    private $configUpload = [
+        'upload_path' => './public/uploads/',
+        'allowed_types' => 'jpg|jpeg|png',
+        'max_size' => 1024,
+        'max_width' => 2048,
+        'max_height' => 2048,
+    ];
+
     public function __construct()
     {
         parent::__construct();
@@ -72,13 +80,7 @@ class Pacientes extends CI_Controller
             'cep' => $this->input->post('cep'),
         ];
 
-        $config['upload_path'] = './public/uploads/';
-        $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size'] = 1024;
-        $config['max_width'] = 2048;
-        $config['max_height'] = 2048;
-
-        $this->load->library('upload', $config);
+        $this->load->library('upload', $this->configUpload);
 
         if ($this->form_validation->run()) {
             //Foi feito uplod da foto no formulário
@@ -171,14 +173,8 @@ class Pacientes extends CI_Controller
             $this->form_validation->set_rules('bairro', 'Bairro', 'required|max_length[100]');
             $this->form_validation->set_rules('cidade', 'Cidade', 'required|max_length[100]');
             $this->form_validation->set_rules('estado_id', 'Estado', 'required|in_list[' . $this->listarEstadosId() . ']');
-
-            $config['upload_path'] = './public/uploads/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['max_size'] = 1024;
-            $config['max_width'] = 2048;
-            $config['max_height'] = 2048;
     
-            $this->load->library('upload', $config);
+            $this->load->library('upload', $this->configUpload);
 
             if ($this->form_validation->run()) {
                 $pacienteDados = [
@@ -194,7 +190,7 @@ class Pacientes extends CI_Controller
                         $pacienteDados['foto'] = $this->upload->data('file_name');
                         
                         //Remove a foto antiga
-                        unlink($config['upload_path'] . $paciente['foto']);
+                        unlink($this->configUpload['upload_path'] . $paciente['foto']);
                     }
                     else {
                         $this->dados['erros_upload'] = $this->upload->display_errors();
@@ -244,6 +240,9 @@ class Pacientes extends CI_Controller
         if(isset($paciente)){
             $this->PacientesModel->delete($paciente['id']) || redirect('pacientes');
             $this->EnderecosModel->delete($paciente['endereco_id']) || redirect('pacientes');
+            if(isset($paciente['foto'])){
+                unlink($this->configUpload['upload_path'] . $paciente['foto']);
+            }
             return redirect('pacientes');
         }
 
