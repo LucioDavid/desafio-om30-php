@@ -1,10 +1,8 @@
 <div class="container">
-    <h1 class="center"><?= $titulo_pagina ?></h1>
+    <h1 class="center teal-text"><?= $titulo_pagina ?></h1>
 
-    <p>
-        <?= isset($erros_upload) ? $erros_upload : '' ?>
-        <?= validation_errors(); ?>
-    </p>
+    <?= isset($erros_upload) ? $erros_upload : '' ?>
+    <?= validation_errors('<div class="alert card red white-text"><div class="card-content"><i class="material-icons">report</i><span>Erro:</span>','</div></div>'); ?>
 
     <h4>Dados Pessoais</h4>
     <form action="/pacientes/create" method="post" enctype="multipart/form-data">
@@ -27,7 +25,7 @@
                 </div>
                 <div class="input-field col s12 m3 l3">
                     <label for="data_nasc">Data de Nascimento</label>
-                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc" class="validate" required  value="<?= isset($paciente['data_nasc']) ? $paciente['data_nasc'] : '' ?>">
+                    <input type="date" placeholder=" " name="data_nasc" id="data_nasc" class="validate" required value="<?= isset($paciente['data_nasc']) ? $paciente['data_nasc'] : '' ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
                 <div class="input-field col s12 m3 l5">
@@ -57,40 +55,40 @@
         <h4>Endereço</h4>
         <div class="card-panel">
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12 l2">
                     <label for="cep">CEP</label>
                     <input type="text" name="cep" id="cep" class="cep validate" maxlength="10" required value="<?= isset($endereco['cep']) ? $endereco['cep'] : '' ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l4">
                     <label for="logradouro">Logradouro</label>
                     <input type="text" name="logradouro" id="logradouro" class="validate" maxlength="100" required value="<?= isset($endereco['logradouro']) ? $endereco['logradouro'] : '' ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l3">
                     <label for="numero">Número</label>
                     <input type="number" name="numero" id="numero" min="1" value="<?= isset($endereco['numero']) ? $endereco['numero'] : '' ?>">
                     <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l3">
                     <label for="complemento">Complemento</label>
                     <input type="text" name="complemento" id="complemento" maxlength="100" value="<?= isset($endereco['complemento']) ? $endereco['complemento'] : '' ?>">
                     <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l5">
                     <label for="bairro">Bairro</label>
                     <input type="text" name="bairro" id="bairro" class="grey-text text-darken-1" maxlength="100" required readonly value="<?= isset($endereco['bairro']) ? $endereco['bairro'] : '' ?>">
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l5">
                     <label for="cidade">Cidade</label>
                     <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly value="<?= isset($endereco['cidade']) ? $endereco['cidade'] : '' ?>">
                 </div>
-                <div class="input-field col s12">
-                    <select name="estado_id">
+                <div class="input-field col s12 l2">
+                    <select id="estado" name="estado_id">
                         <option value="" disabled <?= isset($estado['id']) ? '' : 'selected' ?>>Selecione o Estado</option>
-                        <?php foreach($estados as $estado) { ?>
+                        <?php foreach ($estados as $estado) { ?>
                             <option value="<?= $estado['id'] ?>" <?= isset($estado['id'], $endereco['estado_id']) && $estado['id'] == $endereco['estado_id'] ? 'selected' : '' ?>><?= $estado['uf'] ?></option>
-                        <?php }?>
+                        <?php } ?>
                     </select>
                     <label>Estado</label>
                 </div>

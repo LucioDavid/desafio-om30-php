@@ -1,9 +1,9 @@
 <div class="container">
-    <h1 class="center"><?= $titulo_pagina ?></h1>
+    <h1 class="center teal-text"><?= $titulo_pagina ?></h1>
 
     <p>
         <?= isset($erros_upload) ? $erros_upload : '' ?>
-        <?= validation_errors(); ?>
+        <?= validation_errors('<div class="alert card red white-text"><div class="card-content"><i class="material-icons">report</i><span>Erro:</span>','</div></div>'); ?>
     </p>
 
     <h4>Dados Pessoais</h4>
@@ -57,35 +57,35 @@
         <h4>Endereço</h4>
         <div class="card-panel">
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s12 l2">
                     <label for="cep">CEP</label>
                     <input type="text" name="cep" id="cep" class="cep validate" maxlength="10" required value="<?= $endereco['cep'] ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l4">
                     <label for="logradouro">Logradouro</label>
                     <input type="text" name="logradouro" id="logradouro" class="validate" maxlength="100" required value="<?= $endereco['logradouro'] ?>">
                     <span class="helper-text" data-error="obrigatório" data-success=""></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l3">
                     <label for="numero">Número</label>
                     <input type="number" name="numero" id="numero" min="1" value="<?= $endereco['numero'] ?>">
                     <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l3">
                     <label for="complemento">Complemento</label>
                     <input type="text" name="complemento" id="complemento" maxlength="100" value="<?= $endereco['complemento'] ?>">
                     <span class="helper-text"><i>preencha se houver</i></span>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l5">
                     <label for="bairro">Bairro</label>
                     <input type="text" name="bairro" id="bairro" class="grey-text text-darken-1" maxlength="100" required readonly value="<?= $endereco['bairro'] ?>">
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l5">
                     <label for="cidade">Cidade</label>
                     <input type="text" name="cidade" id="cidade" class="grey-text text-darken-1" maxlength="100" required readonly value="<?= $endereco['cidade'] ?>">
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12 l2">
                     <select name="estado_id" class="validate" required>
                         <option value="" disabled>Selecione o Estado</option>
                         <?php foreach ($estados as $estado) { ?>
