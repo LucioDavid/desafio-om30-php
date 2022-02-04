@@ -19,12 +19,15 @@
 </head>
 
 <body>
-    <script src="/public/assets/vendor/js/jquery-3.6.0.js"></script>
-    <script src="/public/assets/vendor/js/materialize.js"></script>
-    <script src="/public/assets/vendor/js/jquery.mask.js"></script>
-    <script src="/public/assets/vendor/js/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="<?= base_url('public/assets/vendor/js/jquery-3.6.0.js') ?>"></script>
+    <script src="<?= base_url('public/assets/vendor/js/materialize.js') ?>"></script>
+    <script src="<?= base_url('public/assets/vendor/js/jquery.mask.js') ?>"></script>
+    <script src="<?= base_url('public/assets/vendor/js/jquery.dataTables.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('public/assets/vendor/js/moment.min.js') ?>" type="text/javascript"></script>
+    <script src="<?= base_url('public/assets/vendor/js/datetime-moment.js') ?>" type="text/javascript"></script>
     <script>
         $(function() {
+            $.fn.dataTable.moment('DD/MM/YYYY');
             $('#minhaTabela').DataTable({
                 language: {
                     url: '/public/assets/localization/pt_br.json'
