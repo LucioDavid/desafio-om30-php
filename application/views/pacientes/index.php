@@ -9,7 +9,6 @@
     <table id="minhaTabela" class="display">
         <thead>
             <tr>
-                <th class="center">Id</th>
                 <th>Foto</th>
                 <th>Nome</th>
                 <th>Data de Nascimento</th>
@@ -22,8 +21,7 @@
         <tbody>
             <?php foreach ($pacientes as $paciente) : ?>
                 <tr>
-                    <td class="center"><?= $paciente['id'] ?></td>
-                    <td><img height="48px" src="<?= isset($paciente['foto']) ? base_url('public/uploads/' . $paciente['foto']) : '/public/assets/imgs/paciente_foto_placeholder.jpg' ?>" alt="foto_de_perfil"></td>
+                    <td><img class="circle" height="48px" src="<?= isset($paciente['foto']) ? base_url('public/uploads/' . $paciente['foto']) : '/public/assets/imgs/paciente_foto_placeholder.jpg' ?>" alt="foto_de_perfil"></td>
                     <td><?= $paciente['nome'] ?></td>
                     <td><?= date("d/m/Y", strtotime($paciente['data_nasc'])); ?></td>
                     <td><?= $paciente['cpf'] ?></td>
@@ -43,3 +41,5 @@
         </tbody>
     </table>
 </div>
+
+<script src="<?= base_url('public/assets/js/custom/pacientes-index.js') ?>"></script>
