@@ -33,11 +33,11 @@ class Migration_Add_pacientes extends CI_Migration {
             ),
             'cpf' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '11',
+                'constraint' => '14',
             ),
             'cns' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '15',
+                'constraint' => '18',
             ),
             'endereco_id' => array(
                 'type' => 'INT',
